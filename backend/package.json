@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/saracco-juan/parcial-2-pd-acn4bv-giardina-saracco#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.6.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

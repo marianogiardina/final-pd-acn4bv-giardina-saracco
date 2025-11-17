@@ -1,9 +1,15 @@
 const express = require('express');
+const { db } = require('./firebase');
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
+app.get('/',  async (req, res) => {
+
+  const snapshot = await db.collection('tipografias').get();
+
+  console.log(snapshot.docs[0].data());
+
   res.send('Hola soy juan:)');
 });
 

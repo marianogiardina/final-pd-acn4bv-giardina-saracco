@@ -1,0 +1,7 @@
+# environment & secrets
+.env
+*.env
+firebase.json          
+
+# node
+node_modules/
