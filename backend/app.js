@@ -1,9 +1,14 @@
 const express = require('express');
+
 const fs = require('fs');
 const path = require('path');
 
+const { db } = require('./firebase');
+
+
 const app = express();
 const port = 3000;
+
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -11,7 +16,15 @@ app.use(express.json());
 
 const tipografiasPath = path.join(__dirname, 'data', 'tipografias.json');
 
-app.get('/', (req, res) => {
+
+
+app.get('/',  async (req, res) => {
+
+  const snapshot = await db.collection('tipografias').get();
+
+  console.log(snapshot.docs[0].data());
+
+
   res.send('Hola soy juan:)');
 });
 
@@ -51,7 +64,7 @@ app.post('/api/fonts', async(req, res) => {
     tipografias.push(nuevaTipografia);
     
     
-    await fs.promises.writeFile(tipografiasPath, JSON.stringify(tipografias, null, 2));
+    await fs.promises.writeFile(tipografiasPath, JSON.stringify(tipografias));
     
     res.status(201).json(nuevaTipografia);
   } catch (error) {
