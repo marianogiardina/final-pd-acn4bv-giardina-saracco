@@ -1,0 +1,23 @@
+{
+  "name": "parcial-2-pd-acn4bv-giardina-saracco",
+  "version": "1.0.0",
+  "description": "Repositorio plataformas de desarrollo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saracco-juan/parcial-2-pd-acn4bv-giardina-saracco.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saracco-juan/parcial-2-pd-acn4bv-giardina-saracco/issues"
+  },
+  "homepage": "https://github.com/saracco-juan/parcial-2-pd-acn4bv-giardina-saracco#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
