@@ -3,11 +3,67 @@ import { useState } from 'react';
 
 const FormAddFont = () => {
 
-  
+  const CATEGORIES = [
+    'Moderna',
+    'Elegante',
+    'Clasica',
+    'Creativa',
+  ];
+
+  const STYLES = [
+    'normal',
+    'italica',
+    'subrayada',
+    'mayuscula',
+  ];
+
+  const WEIGHTS = [
+    'normal',
+    'bold',
+    'bolder',
+    'lighter',
+  ];
+
+  const [name, setName] = useState('');
+  const [size, setSize] = useState('');
+  const [style, setStyle] = useState('');
+  const [weight, setWeight] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSubmit = (e) => {
 
     e.preventDefault(); 
+
+    // Validar que no haya campos vacíos
+    if (!name || !size || !style || !weight || !category) {
+      alert('Por favor completa todos los campos');
+      return;
+    }
+
+    const data = {
+      name,
+      size: size + 'px',
+      style,
+      weight,
+      category
+    };
+
+    console.log('Formulario enviado:', data);
+
+    fetch('http://localhost:3000/api/fonts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      setName('');
+      setSize('');
+      setStyle('');
+      setWeight('');
+      setCategory('');
+    });
 
   }
 
@@ -18,16 +74,19 @@ const FormAddFont = () => {
           <span className="text-primary">+</span> Agregar Tipografía
         </h2>
           
+
         <form className="space-y-4" onSubmit={handleSubmit}>
             
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Nombre de la Tipografía
             </label>
-            <input 
+            <input
+              value={name}
+              onChange={(e) => {setName(e.target.value)}} 
               type="text" 
-              placeholder="Ej: Inter"
-              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="Ingrese el nombre de la tipografia"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
 
@@ -36,38 +95,27 @@ const FormAddFont = () => {
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Categoría
             </label>
-            <select className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option>Modernas</option>
-              <option>Contemporáneas</option>
-              <option>Clásicas</option>
-              <option>Display</option>
-              <option>Serif</option>
-              <option>Sans-serif</option>
+            <select
+              value={category}
+              onChange={(e) => {setCategory(e.target.value)}}
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+              <option value="">Selecciona una categoría</option>
+              {CATEGORIES.map((cat, index) => (
+                <option key={index} value={cat}>{cat}</option>
+              ))}
             </select>
           </div>
 
             
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              Tipo
+              Tamaño
             </label>
-            <select className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option>Sans-serif</option>
-              <option>Serif</option>
-              <option>Display</option>
-              <option>Monospace</option>
-              <option>Script</option>
-            </select>
-          </div>
-
-            
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Número de Variantes
-            </label>
-            <input 
+            <input
+              value={size}
+              onChange={(e) => {setSize(e.target.value)}} 
               type="number" 
-              placeholder="Ej: 18"
+              placeholder="Ingrese el tamaño en px"
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
@@ -75,40 +123,34 @@ const FormAddFont = () => {
             
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              Descripción
+              Estilo
             </label>
-            <textarea 
-              rows="3"
-              placeholder="Breve descripción de la tipografía..."
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-            ></textarea>
+            <select
+              value={style}
+              onChange={(e) => {setStyle(e.target.value)}}
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+              <option value="">Selecciona un estilo</option>
+              {STYLES.map((style, index) => (
+                <option key={index} value={style}>{style.charAt(0).toUpperCase() + style.slice(1)}</option>
+              ))}
+            </select>
           </div>
 
-            
-          <div className="flex items-center gap-3">
-            <input 
-              type="checkbox" 
-              id="featured"
-              className="w-5 h-5 bg-gray-800 border-gray-700 rounded text-primary focus:ring-primary"
-            />
-            <label htmlFor="featured" className="text-sm text-gray-300 cursor-pointer">
-              Marcar como destacada
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Grosor
             </label>
+            <select
+              value={weight}
+              onChange={(e) => {setWeight(e.target.value)}}
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+              <option value="">Selecciona un grosor</option>
+              {WEIGHTS.map((weight, index) => (
+                <option key={index} value={weight}>{weight.charAt(0).toUpperCase() + weight.slice(1)}</option>
+              ))}
+            </select>
           </div>
 
-            
-          <div className="flex items-center gap-3">
-            <input 
-              type="checkbox" 
-              id="new"
-              className="w-5 h-5 bg-gray-800 border-gray-700 rounded text-primary focus:ring-primary"
-            />
-            <label htmlFor="new" className="text-sm text-gray-300 cursor-pointer">
-              Marcar como novedad
-            </label>
-          </div>
-
-            
           <div className="pt-4 space-y-2">
             <button 
               type="submit"
@@ -124,6 +166,7 @@ const FormAddFont = () => {
             </button>
           </div>
         </form>
+
       </div>
     </div>
   )

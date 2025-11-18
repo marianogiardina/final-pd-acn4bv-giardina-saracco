@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import FormAddFont from './components/FormAddFont'
+
 
 
 
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <FormAddFont></FormAddFont>
+      <h1>Hola</h1>
     </>
   )
 }
