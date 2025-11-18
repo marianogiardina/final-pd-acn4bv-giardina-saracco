@@ -48,6 +48,8 @@ const Dashboard = () => {
 
   return (
     <div className="bg-gray-950 text-gray-100 min-h-screen">
+      {/* Header */}
+
       <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -65,12 +67,17 @@ const Dashboard = () => {
         </div>
       </header>
 
+      {/* FormAddFont */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           <FormAddFont />
 
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center justify-between">
+
+              {/* Buscador y filtros */}
+
               <h2 className="text-2xl font-bold">Tipografías Registradas</h2>
               <div className="flex items-center gap-2">
                 <input
@@ -101,6 +108,8 @@ const Dashboard = () => {
             <div>
               <Table fonts={fonts} />
             </div>
+
+            {/* paginado */}
 
             <div className="mt-8 flex items-center justify-between">
               <p className="text-sm text-gray-400">

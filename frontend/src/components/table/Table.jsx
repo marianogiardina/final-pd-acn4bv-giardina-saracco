@@ -4,8 +4,8 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const Table = ({ fonts }) => {
   const handleEdit = (id) => {
-      // TODO: implementar logica
-      alert(`Edit font with id: ${id}`);
+    // TODO: implementar logica
+    alert(`Edit font with id: ${id}`);
   };
 
   const handleDelete = (id) => {
@@ -16,7 +16,10 @@ const Table = ({ fonts }) => {
   return (
     <>
       {fonts.map((font) => (
-        <div key={font.id} className="bg-gray-900 rounded-xl p-5 mt-3 border border-gray-800 hover:border-primary transition-all group">
+        <div
+          key={font.id}
+          className="bg-gray-900 rounded-xl p-5 mt-3 border border-gray-800 hover:border-primary transition-all group"
+        >
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
