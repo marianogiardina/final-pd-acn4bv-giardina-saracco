@@ -1,21 +1,22 @@
-import React from "react";
 import Button from "../Button/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 const Table = ({ fonts }) => {
   const handleEdit = (id) => {
-    // TODO: implement edit logic
+      // TODO: implementar logica
+      alert(`Edit font with id: ${id}`);
   };
 
   const handleDelete = (id) => {
-    // TODO: implement delete logic
+    // TODO: implementar logica
+    alert(`Delete font with id: ${id}`);
   };
 
   return (
     <>
       {fonts.map((font) => (
-        <div key={font.id} className="bg-gray-900 rounded-xl p-5 border border-gray-800 hover:border-primary transition-all group">
+        <div key={font.id} className="bg-gray-900 rounded-xl p-5 m-1 border border-gray-800 hover:border-primary transition-all group">
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
@@ -43,13 +44,13 @@ const Table = ({ fonts }) => {
                 icon={<EditIcon color="warning" />}
                 variant={"edit"}
                 type={"button"}
-                onClick={handleEdit}
+                onClick={() => handleEdit(font.id)}
               />
               <Button
                 icon={<DeleteIcon color="error" />}
                 variant={"delete"}
                 type={"button"}
-                onClick={handleDelete}
+                onClick={() => handleDelete(font.id)}
               />
             </div>
           </div>

@@ -1,5 +1,7 @@
 import Table from "../table/table";
 
+
+// TODO: reemplazar con datos del endpoint
 const fonts = [
   {
     id: 1,
