@@ -18,13 +18,13 @@ const Table = ({ fonts }) => {
       {fonts.map((font) => (
         <div
           key={font.id}
-          className="bg-gray-900 rounded-xl p-5 mt-3 border border-gray-800 hover:border-primary transition-all group"
+          className="bg-gray-900 rounded-xl p-5 mt-3 border border-gray-600 transition-all group hover:border-blue-600"
         >
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h3
-                  className={`text-white`}
+                  className={`text-blue-600`}
                   style={{
                     fontFamily: font.name,
                     fontSize: font.size,
