@@ -1,50 +1,24 @@
 import FormAddFont from "../FormAddFont/FormAddFont";
 import Table from "../table/table";
+import { FontsService } from './../../services/fonts';
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  // TODO: reemplazar con datos del endpoint
-  const fonts = [
-    {
-      id: 1,
-      name: "Sansation",
-      size: "16px",
-      style: "italic",
-      weight: "normal",
-      category: "moderna",
-    },
-    {
-      id: 2,
-      name: "Roboto",
-      size: "14px",
-      style: "normal",
-      weight: "bold",
-      category: "moderna",
-    },
-    {
-      id: 3,
-      name: "Open Sans",
-      size: "18px",
-      style: "normal",
-      weight: "normal",
-      category: "sans-serif",
-    },
-    {
-      id: 4,
-      name: "Times New Roman",
-      size: "22px",
-      style: "normal",
-      weight: "normal",
-      category: "moderna",
-    },
-    {
-      id: 5,
-      name: "Lucida Console",
-      size: "18px",
-      style: "normal",
-      weight: "200",
-      category: "moderna",
-    },
-  ];
+  
+  const [fonts, setFonts] = useState([]);
+
+  const fetchFonts = async () => {
+    try {
+      const data = await FontsService.getAllFonts();
+      setFonts(data);
+    } catch (error) {
+      console.error("Error fetching fonts:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFonts();
+  }, [fonts]);
 
   return (
     <div className="bg-gray-950 text-gray-100 min-h-screen">
