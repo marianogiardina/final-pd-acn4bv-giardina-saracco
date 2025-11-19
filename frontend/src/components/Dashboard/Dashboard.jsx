@@ -18,7 +18,34 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchFonts();
-  }, [fonts]);
+  }, []);
+
+  const handleAddFont = async (newFont) => {
+    try {
+      const created = await FontsService.createFont(newFont);
+      setFonts([...fonts, created]);
+    } catch (error) {
+      console.error("Error adding font:", error);
+    }
+  };
+
+  const handleDeleteFont = async (id) => {
+    try {
+      await FontsService.deleteFont(id);
+      setFonts(fonts.filter(font => font.id !== id));
+    } catch (error) {
+      console.error("Error deleting font:", error);
+    }
+  };
+
+  const handleUpdateFont = async (id, updatedData) => {
+    try {
+      const updated = await FontsService.updateFont(id, updatedData);
+      setFonts(fonts.map(font => font.id === id ? updated : font));
+    } catch (error) {
+      console.error("Error updating font:", error);
+    }
+  };
 
   return (
     <div className="bg-gray-950 text-gray-100 min-h-screen">
@@ -45,7 +72,7 @@ const Dashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          <FormAddFont />
+          <FormAddFont onAddFont={handleAddFont} />
 
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center justify-between">
@@ -80,7 +107,11 @@ const Dashboard = () => {
             {/* Cards Tipografias */}
 
             <div>
-              <Table fonts={fonts} />
+              <Table 
+                fonts={fonts} 
+                onDelete={handleDeleteFont}
+                onUpdate={handleUpdateFont}
+              />
             </div>
 
             {/* paginado */}

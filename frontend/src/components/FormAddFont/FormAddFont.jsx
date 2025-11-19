@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-const FormAddFont = () => {
+const FormAddFont = ({ onAddFont }) => {
 
   const CATEGORIES = [
     'Moderna',
@@ -30,8 +30,7 @@ const FormAddFont = () => {
   const [weight, setWeight] = useState('');
   const [category, setCategory] = useState('');
 
-  const handleSubmit = (e) => {
-
+  const handleSubmit = async (e) => {
     e.preventDefault(); 
 
     // Validar que no haya campos vacíos
@@ -40,7 +39,7 @@ const FormAddFont = () => {
       return;
     }
 
-    const data = {
+    const fontData = {
       name,
       size: size + 'px',
       style,
@@ -48,23 +47,19 @@ const FormAddFont = () => {
       category
     };
 
-    console.log('Formulario enviado:', data);
-
-    fetch('http://localhost:3000/api/fonts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(() => {
+    try {
+      await onAddFont(fontData);
+      
       setName('');
       setSize('');
       setStyle('');
       setWeight('');
       setCategory('');
-    });
-
+      
+      alert('Tipografía agregada exitosamente');
+    } catch (error) {
+      alert('Error al agregar la tipografía');
+    }
   }
 
   return (
