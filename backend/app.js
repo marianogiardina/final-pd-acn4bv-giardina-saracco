@@ -18,16 +18,36 @@ app.use(express.json());
 
 const tipografiasPath = path.join(__dirname, 'data', 'tipografias.json');
 
-
+const validateFontData = (req, res, next) => {
+  const { name, size, style, weight, category } = req.body;
+  
+  if (!name || typeof name !== 'string' || name.trim() === '') {
+    return res.status(400).json({ message: "El campo 'Nombre' es requerido y debe ser texto válido" });
+  }
+  
+  if (!size || typeof size !== 'string' || size.trim() === '' || isNaN(parseInt(size)) || parseInt(size) <= 0) {
+    return res.status(400).json({ message: "El campo 'Tamaño' es requerido y debe ser un numero positivo" });
+  }
+  
+  if (!style || typeof style !== 'string') {
+    return res.status(400).json({ message: "El campo 'Estilo' es requerido" });
+  }
+  
+  if (!weight || typeof weight !== 'string') {
+    return res.status(400).json({ message: "El campo 'Grosor' es requerido" });
+  }
+  
+  if (!category || typeof category !== 'string') {
+    return res.status(400).json({ message: "El campo 'Categoría' es requerido" });
+  }
+  
+  next();
+};
 
 app.get('/',  async (req, res) => {
-
   const snapshot = await db.collection('tipografias').get();
-
   console.log(snapshot.docs[0].data());
-
-
-  res.send('Hola soy juan:)');
+  res.send('El servidor está funcionando correctamente');
 });
 
 
@@ -47,7 +67,7 @@ app.get('/api/fonts', async (req, res) => {
 });
 
 
-app.post('/api/fonts', async(req, res) => {
+app.post('/api/fonts', validateFontData, async(req, res) => {
   try {
     
     const data = await fs.promises.readFile(tipografiasPath, 'utf-8');
@@ -75,7 +95,7 @@ app.post('/api/fonts', async(req, res) => {
   }
 });
 
-app.put('/api/fonts/:id', async (req, res) => {
+app.put('/api/fonts/:id', validateFontData, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     

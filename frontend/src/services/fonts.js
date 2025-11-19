@@ -6,7 +6,8 @@ const getAllFonts = async () => {
     const response = await fetch(`${API_BASE_URL}/fonts`);
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -28,13 +29,13 @@ const createFont = async (fontData) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error al crear la tipografía:", error);
     throw error;
   }
 };
@@ -50,13 +51,13 @@ const updateFont = async (id, fontData) => {
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Error: ${response.status}`);
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error al actualizar la tipografía:", error);
         throw error;
     }
 };
@@ -67,12 +68,12 @@ const deleteFont = async (id) => {
             method: "DELETE",
         });
         if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Error: ${response.status}`);
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error al eliminar la tipografía:", error);
         throw error;
     }
 };

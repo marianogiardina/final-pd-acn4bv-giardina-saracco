@@ -1,10 +1,9 @@
 import FormAddFont from "../FormAddFont/FormAddFont";
 import Table from "../table/table";
-import { FontsService } from './../../services/fonts';
+import { FontsService } from "./../../services/fonts";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  
   const [fonts, setFonts] = useState([]);
 
   const fetchFonts = async () => {
@@ -18,7 +17,37 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchFonts();
-  }, [fonts]);
+  }, []);
+
+  const handleAddFont = async (newFont) => {
+    try {
+      const created = await FontsService.createFont(newFont);
+      setFonts([...fonts, created]);
+      alert("Tipografía agregada exitosamente");
+    } catch (error) {      
+      alert(error.message);
+    }
+  };
+
+  const handleDeleteFont = async (id) => {
+    try {
+      await FontsService.deleteFont(id);
+      setFonts(fonts.filter((font) => font.id !== id));
+      alert("Tipografía eliminada exitosamente");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleUpdateFont = async (id, updatedData) => {
+    try {
+      const updated = await FontsService.updateFont(id, updatedData);
+      setFonts(fonts.map((font) => (font.id === id ? updated : font)));
+      alert("Tipografía actualizada exitosamente");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="bg-gray-950 text-gray-100 min-h-screen">
@@ -45,11 +74,10 @@ const Dashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          <FormAddFont />
+          <FormAddFont onAddFont={handleAddFont} />
 
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center justify-between">
-
               {/* Buscador y filtros */}
 
               <h2 className="text-2xl font-bold">Tipografías Registradas</h2>
@@ -80,7 +108,11 @@ const Dashboard = () => {
             {/* Cards Tipografias */}
 
             <div>
-              <Table fonts={fonts} />
+              <Table
+                fonts={fonts}
+                onDelete={handleDeleteFont}
+                onUpdate={handleUpdateFont}
+              />
             </div>
 
             {/* paginado */}

@@ -1,17 +1,8 @@
 import Button from "../Button/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { FontsService } from "../../services/fonts";
 
-const Table = ({ fonts }) => {
-
-  const handleEdit = (id) => {
-    alert(`Editar tipografía con ID: ${id}`);
-  };
-
-  const handleDelete = async (id) => {
-    await FontsService.deleteFont(id);
-  };
+const Table = ({ fonts, onEdit, onDelete }) => {
 
   return (
     <>
@@ -53,7 +44,7 @@ const Table = ({ fonts }) => {
                 icon={<DeleteIcon color="error" />}
                 variant={"delete"}
                 type={"button"}
-                onClick={() => handleDelete(font.id)}
+                onClick={() => onDelete(font.id)}
               />
             </div>
           </div>
