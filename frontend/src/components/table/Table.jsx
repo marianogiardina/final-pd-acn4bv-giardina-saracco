@@ -1,16 +1,16 @@
 import Button from "../Button/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { FontsService } from "../../services/fonts";
 
 const Table = ({ fonts }) => {
+
   const handleEdit = (id) => {
-    // TODO: implementar logica
-    alert(`Edit font with id: ${id}`);
+    alert(`Editar tipografía con ID: ${id}`);
   };
 
-  const handleDelete = (id) => {
-    // TODO: implementar logica
-    alert(`Delete font with id: ${id}`);
+  const handleDelete = async (id) => {
+    await FontsService.deleteFont(id);
   };
 
   return (

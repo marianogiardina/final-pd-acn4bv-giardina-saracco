@@ -39,7 +39,47 @@ const createFont = async (fontData) => {
   }
 };
 
+const updateFont = async (id, fontData) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/fonts/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(fontData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error al actualizar la tipografía:", error);
+        throw error;
+    }
+};
+
+const deleteFont = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/fonts/${id}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error al eliminar la tipografía:", error);
+        throw error;
+    }
+};
+
 export const FontsService = {
   getAllFonts,
   createFont,
+  updateFont,
+  deleteFont,
 };
