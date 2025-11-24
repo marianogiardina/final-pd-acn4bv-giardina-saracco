@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import FormSelect from '../Select/FormSelect';
 
 const FormAddFont = ({ onAddFont }) => {
 
@@ -12,9 +13,8 @@ const FormAddFont = ({ onAddFont }) => {
 
   const STYLES = [
     'normal',
-    'italica',
-    'subrayada',
-    'mayuscula',
+    'italic',
+    'oblique',
   ];
 
   const WEIGHTS = [
@@ -77,23 +77,14 @@ const FormAddFont = ({ onAddFont }) => {
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
-
             
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Categoría
-            </label>
-            <select
-              value={category}
-              onChange={(e) => {setCategory(e.target.value)}}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option value="">Selecciona una categoría</option>
-              {CATEGORIES.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
-              ))}
-            </select>
-          </div>
-
+          <FormSelect
+            label="Categoría"
+            value={category}
+            onChange={setCategory}
+            options={CATEGORIES}
+            placeholder="Selecciona una categoría"
+          />
             
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -107,37 +98,22 @@ const FormAddFont = ({ onAddFont }) => {
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
-
             
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Estilo
-            </label>
-            <select
-              value={style}
-              onChange={(e) => {setStyle(e.target.value)}}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option value="">Selecciona un estilo</option>
-              {STYLES.map((style, index) => (
-                <option key={index} value={style}>{style.charAt(0).toUpperCase() + style.slice(1)}</option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label="Estilo"
+            value={style}
+            onChange={setStyle}
+            options={STYLES}
+            placeholder="Selecciona un estilo"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Grosor
-            </label>
-            <select
-              value={weight}
-              onChange={(e) => {setWeight(e.target.value)}}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option value="">Selecciona un grosor</option>
-              {WEIGHTS.map((weight, index) => (
-                <option key={index} value={weight}>{weight.charAt(0).toUpperCase() + weight.slice(1)}</option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label="Grosor"
+            value={weight}
+            onChange={setWeight}
+            options={WEIGHTS}
+            placeholder="Selecciona un grosor"
+          />
 
           <div className="pt-4 space-y-2">
             <button 
