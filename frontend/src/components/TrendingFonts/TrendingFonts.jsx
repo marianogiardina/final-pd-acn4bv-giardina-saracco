@@ -1,6 +1,7 @@
 import React from "react";
 
 const TrendingFonts = ({ fonts = [], onSelect, selected, className = "" }) => {
+    
 	if (!fonts || fonts.length === 0) {
 		return (
 			<div className={`p-6 rounded-2xl bg-[#252841] text-center text-sm text-gray-400 ${className}`}>
