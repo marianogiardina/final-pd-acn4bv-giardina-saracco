@@ -1,6 +1,7 @@
-import FormAddFont from "../FormAddFont/FormAddFont";
-import Table from "../table/table";
-import { FontsService } from "./../../services/fonts";
+import { Link } from "react-router-dom";
+import FormAddFont from "../../components/FormAddFont/FormAddFont";
+import Table from "../../components/table/table";
+import { FontsService } from "../../services/fonts";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
@@ -61,10 +62,9 @@ const Dashboard = () => {
               <p className="text-sm text-gray-400">Panel de Administración</p>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-400">Admin</span>
-              <button className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm transition-colors">
-                Salir
-              </button>
+              <Link to="/" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm transition-colors">
+                Home
+              </Link>
             </div>
           </div>
         </div>

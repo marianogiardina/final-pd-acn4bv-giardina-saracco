@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [inputText, setInputText] = useState("");
@@ -19,18 +20,11 @@ const Home = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button
-                onClick={() => {}}
+                <Link to="/dashboard"
                 className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
               >
-                Explorar
-              </button>
-              <button
-                onClick={() => {}}
-                className="bg-transparent border-2 border-black text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-black hover:text-white transition-colors"
-              >
-                Para Ti
-              </button>
+                Admin
+              </Link>
             </div>
           </div>
         </div>

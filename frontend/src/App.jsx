@@ -1,13 +1,16 @@
-import Dashboard from './views/Home/Dashboard/Dashboard'
-import Home from './views/Home/Home'
+import { Link, Route, Routes } from "react-router-dom";
+import Home from "./views/Home/Home";
+import Dashboard from "./views/Dashboard/Dashboard";
 
 function App() {
-
   return (
     <>
-      <Home/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
