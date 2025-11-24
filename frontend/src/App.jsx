@@ -1,10 +1,11 @@
-import Dashboard from './components/Dashboard/Dashboard'
+import Dashboard from './views/Home/Dashboard/Dashboard'
+import Home from './views/Home/Home'
 
 function App() {
 
   return (
     <>
-      <Dashboard/>
+      <Home/>
     </>
   )
 }
