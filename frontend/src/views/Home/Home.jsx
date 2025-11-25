@@ -23,30 +23,11 @@ const Home = () => {
     localStorage.setItem("favoriteFonts", JSON.stringify(updatedFavorites));
   };
 
-  // Funcion para cargar fuentes desde Google Fonts
-  const loadGoogleFont = (fontName) => {
-    const formattedName = fontName.replace(/ /g, "+");
-    const linkId = `google-font-${formattedName}`;
-
-    // Evita cargar la misma fuente
-    if (document.getElementById(linkId)) return;
-
-    const link = document.createElement("link");
-    link.id = linkId;
-    link.href = `https://fonts.googleapis.com/css2?family=${formattedName}:wght@400;700&display=swap`;
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-  };
 
   const fetchFonts = async () => {
     try {
       const data = await FontsService.getAllFonts();
       setFonts(data);
-
-      // Cargar todas las fuentes de Google Fonts
-      data.forEach((font) => {
-        loadGoogleFont(font.name);
-      });
     } catch (error) {
       console.error("Error fetching fonts:", error);
     }
