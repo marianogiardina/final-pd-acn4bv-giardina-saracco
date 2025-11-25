@@ -1,15 +1,16 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./views/Home/Home";
 import Dashboard from "./views/Dashboard/Dashboard";
+import Layout from "./views/Layout/Layout";
 
 function App() {
   return (
-    <>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </>
+      </Route>
+    </Routes>
   );
 }
 

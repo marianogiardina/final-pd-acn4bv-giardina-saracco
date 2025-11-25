@@ -59,7 +59,7 @@ const FormAddFont = ({ onAddFont }) => {
 
   return (
     <div className="lg:col-span-1">
-      <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 sticky top-24">
+      <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 h-fit">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
           <span className="text-primary">+</span> Agregar Tipografía
         </h2>
@@ -111,7 +111,7 @@ const FormAddFont = ({ onAddFont }) => {
           <div className="pt-4 space-y-2">
             <button 
               type="submit"
-              className="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg transition-colors"
             >
               Agregar Tipografía
             </button>
