@@ -4,6 +4,30 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  role      Int      @default(1)
+  createdAt DateTime @default(now())
+  
+  fonts     Font[]
+
+  @@map("users")
+}
+
+model Font {
+  id        Int      @id @default(autoincrement())
+  name      String 
+  size      String
+  style     String
+  weight    String
+  category  String
+  createdAt DateTime @default(now())
+  
+  users     User[]
+
+  @@map("fonts")
+}
