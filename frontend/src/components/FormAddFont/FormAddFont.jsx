@@ -1,61 +1,45 @@
-import React from 'react'
-import { useState } from 'react';
-import FormSelect from '../Select/FormSelect';
-import FormInput from '../Input/FormInput';
-import { Form } from 'react-router-dom';
+import React from "react";
+import { useState } from "react";
+import FormSelect from "../Select/FormSelect";
+import FormInput from "../Input/FormInput";
+import { Form } from "react-router-dom";
 
 const FormAddFont = ({ onAddFont }) => {
+  const CATEGORIES = ["Moderna", "Elegante", "Clasica", "Creativa"];
 
-  const CATEGORIES = [
-    'Moderna',
-    'Elegante',
-    'Clasica',
-    'Creativa',
-  ];
+  const STYLES = ["normal", "italic", "oblique"];
 
-  const STYLES = [
-    'normal',
-    'italic',
-    'oblique',
-  ];
+  const WEIGHTS = ["normal", "bold", "bolder", "lighter"];
 
-  const WEIGHTS = [
-    'normal',
-    'bold',
-    'bolder',
-    'lighter',
-  ];
-
-  const [name, setName] = useState('');
-  const [size, setSize] = useState('');
-  const [style, setStyle] = useState('');
-  const [weight, setWeight] = useState('');
-  const [category, setCategory] = useState('');
+  const [name, setName] = useState("");
+  const [size, setSize] = useState("");
+  const [style, setStyle] = useState("");
+  const [weight, setWeight] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const fontData = {
       name,
-      size: size + 'px',
+      size: size + "px",
       style,
       weight,
-      category
+      category,
     };
 
     try {
       await onAddFont(fontData);
-      
-      setName('');
-      setSize('');
-      setStyle('');
-      setWeight('');
-      setCategory('');
-      
+
+      setName("");
+      setSize("");
+      setStyle("");
+      setWeight("");
+      setCategory("");
     } catch (error) {
       throw error;
     }
-  }
+  };
 
   return (
     <div className="lg:col-span-1">
@@ -63,18 +47,16 @@ const FormAddFont = ({ onAddFont }) => {
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
           <span className="text-primary">+</span> Agregar Tipografía
         </h2>
-          
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-            
-
           <FormInput
             value={name}
             onChange={setName}
             type="text"
             placeholder="Ingrese el nombre de la tipografia"
+            label={"Nombre"}
           />
-            
+
           <FormSelect
             label="Categoría"
             value={category}
@@ -84,14 +66,13 @@ const FormAddFont = ({ onAddFont }) => {
           />
 
           <FormInput
+            label={"Tamaño"}
             value={size}
             onChange={setSize}
             type="number"
             placeholder="Ingrese el tamaño en px"
           />
-             
-          
-            
+
           <FormSelect
             label="Estilo"
             value={style}
@@ -109,7 +90,7 @@ const FormAddFont = ({ onAddFont }) => {
           />
 
           <div className="pt-4 space-y-2">
-            <button 
+            <button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg transition-colors"
             >
@@ -117,10 +98,9 @@ const FormAddFont = ({ onAddFont }) => {
             </button>
           </div>
         </form>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FormAddFont 
+export default FormAddFont;

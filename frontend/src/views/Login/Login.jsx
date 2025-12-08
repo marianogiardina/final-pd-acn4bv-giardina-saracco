@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
-import Input from "../../components/input/FormInput";
+import Input from "../../components/Input/FormInput";
 
 const Login = () => {
   return (
@@ -21,7 +21,7 @@ const Login = () => {
             <div>
               <Input
                 type={"email"}
-                onChange={()=>{}}
+                onChange={() => {}}
                 value={""}
                 key={""}
                 placeholder={"Escribe tu email"}
@@ -32,7 +32,7 @@ const Login = () => {
             <div>
               <Input
                 type={"password"}
-                onChange={()=>{}}
+                onChange={() => {}}
                 value={""}
                 key={""}
                 placeholder={"Escribe tu contraseña"}
@@ -40,12 +40,16 @@ const Login = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-[#f9d423] hover:bg-[#ffd700] text-[#030712] font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Iniciar Sesión
-            </button>
+            <div className="w-full">
+              <Button
+                onClick={() => {}}
+                text={"Iniciar Sesión"}
+                variant={"secondary"}
+                key={"login-button"}
+                type="submit"
+                width={"w-full"}
+              />
+            </div>
           </form>
 
           <div className="flex items-center my-6">
