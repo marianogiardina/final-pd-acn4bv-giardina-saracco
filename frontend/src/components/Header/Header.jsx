@@ -16,12 +16,18 @@ const Header = () => {
             <h1 className="text-3xl font-bold tracking-tight">GLYPHA</h1>
             <p className="text-sm mt-1">¡Vamos a encontrar tu tipografía ideal!</p>
           </div>
-          <nav >
+          <nav className="flex items-center gap-4">
             <Link
               to={target.to}
-              className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-600 transition-colors"
+              className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               {target.label}
+            </Link>
+            <Link
+              to="/login"
+              className="bg-white text-black border-2 border-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors"
+            >
+              Login
             </Link>
           </nav>
         </div>
