@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { FontsService } from "../../services/fonts";
 import TrendingFonts from "../../components/TrendingFonts/TrendingFonts";
 import { useFonts } from "../../hooks/useFonts";
+import CategoryCard from "../../components/Cards/CategoryCard";
 
 const Home = () => {
   const [inputText, setInputText] = useState("");
   const [displayText, setDisplayText] = useState("AåBbCc\n#9½\nƒ%£©∑∅!");
   const [fontFamily, setFontFamily] = useState("");
   const [favoriteFonts, setFavoriteFonts] = useState([]);
+
+  const CATEGORIES = ["Moderna", "Elegante", "Clasica", "Creativa"];
 
   const { fonts } = useFonts();
 
@@ -36,6 +39,22 @@ const Home = () => {
   return (
     <div className="bg-[#030712] text-white font-sans min-h-screen">
       <main className="max-w-7xl mx-auto px-6 py-10">
+
+        <section className="mb-12">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold mb-2">
+              Categorias
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Haz click en una tarjeta para ver las diferentes fuentes por categoria!
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CATEGORIES.map((category) => (
+              <CategoryCard key={category} category={category} />
+            ))}
+          </div>
+        </section>
 
         <section className="mb-12">
           <div className="mb-6">
