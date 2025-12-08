@@ -61,7 +61,7 @@ const FormFont = ({ onAddFont, onUpdateFont, fontToEdit, onCancelEdit }) => {
     <div className="lg:col-span-1">
       <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 h-fit">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <span className="text-primary">+</span> {fontToEdit ? "Editar Tipografía" : "Agregar Tipografía"}
+          {fontToEdit ? "Editar Tipografía" : "Agregar Tipografía"}
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
