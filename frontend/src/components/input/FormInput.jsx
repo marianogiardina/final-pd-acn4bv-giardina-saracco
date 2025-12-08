@@ -1,11 +1,13 @@
 import React from 'react'
 
-const FormInput = ({ value, onChange, type, placeholder }) => {
+const FormInput = ({ value, onChange, type, placeholder, label }) => {
   return (
     <div>
+      {label && (
         <label className="block text-sm font-medium text-gray-300 mb-2">
-            Tamaño
+          {label}
         </label>
+      )}
         <input
             value={value}
             onChange={(e) => {onChange(e.target.value)}} 
