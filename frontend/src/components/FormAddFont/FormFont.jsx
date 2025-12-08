@@ -4,7 +4,7 @@ import FormSelect from "../Select/FormSelect";
 import FormInput from "../Input/FormInput";
 import { Form } from "react-router-dom";
 
-const FormAddFont = ({ onAddFont, onUpdateFont, fontToEdit, onCancelEdit }) => {
+const FormFont = ({ onAddFont, onUpdateFont, fontToEdit, onCancelEdit }) => {
   const CATEGORIES = ["Moderna", "Elegante", "Clasica", "Creativa"];
 
   const STYLES = ["normal", "italic", "oblique"];
@@ -135,4 +135,4 @@ const FormAddFont = ({ onAddFont, onUpdateFont, fontToEdit, onCancelEdit }) => {
   );
 };
 
-export default FormAddFont;
+export default FormFont;
