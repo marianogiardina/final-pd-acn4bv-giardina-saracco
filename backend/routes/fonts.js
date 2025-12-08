@@ -3,6 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
+const { prisma } = require('../lib/prisma');
+
 
 const tipografiasPath = path.join(__dirname, '../data', 'tipografias.json');
 
@@ -57,25 +59,16 @@ router.get('/', async (req, res) => {
 
 router.post('/', validateFontData, async(req, res) => {
   try {
-    
-    const data = await fs.promises.readFile(tipografiasPath, 'utf-8');
-    const tipografias = JSON.parse(data);
-    
-    
-    const nuevaTipografia = {
-      id: tipografias.length + 1,
-      name: req.body.name,
-      size: req.body.size,
-      style: req.body.style,
-      weight: req.body.weight,
-      category: req.body.category
-    };
-    
-    
-    tipografias.push(nuevaTipografia);
-    
-    
-    await fs.promises.writeFile(tipografiasPath, JSON.stringify(tipografias));
+   
+    const nuevaTipografia = await prisma.font.create({
+      data: {
+        name: req.body.name,
+        size: req.body.size,
+        style: req.body.style,
+        weight: req.body.weight,
+        category: req.body.category
+      }
+    });
     
     res.status(201).json(nuevaTipografia);
   } catch (error) {
