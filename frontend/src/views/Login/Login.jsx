@@ -1,9 +1,55 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/FormInput";
+import { AuthService } from "../../services/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    // Limpiar error cuando el usuario empiece a escribir
+    if (error) setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    // Validaciones básicas
+    if (!formData.email.trim() || !formData.password.trim()) {
+      setError("Todos los campos son requeridos");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Llamar al servicio de login
+      const response = await AuthService.login(formData);
+      
+      // Mostrar mensaje de éxito
+      console.log("Login exitoso:", response.user);
+      
+      // Redirigir al dashboard
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "Error al iniciar sesión");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-[#030712] text-white font-sans min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
@@ -17,13 +63,19 @@ const Login = () => {
             </p>
           </div>
 
-          <form className="space-y-6">
+          {/* Mostrar error si existe */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <Input
                 type={"email"}
-                onChange={() => {}}
-                value={""}
-                key={""}
+                onChange={(value) => handleChange("email", value)}
+                value={formData.email}
                 placeholder={"Escribe tu email"}
                 label={"Correo Electrónico"}
               />
@@ -32,9 +84,8 @@ const Login = () => {
             <div>
               <Input
                 type={"password"}
-                onChange={() => {}}
-                value={""}
-                key={""}
+                onChange={(value) => handleChange("password", value)}
+                value={formData.password}
                 placeholder={"Escribe tu contraseña"}
                 label={"Contraseña"}
               />
@@ -42,10 +93,8 @@ const Login = () => {
 
             <div className="w-full">
               <Button
-                onClick={() => {}}
-                text={"Iniciar Sesión"}
+                text={loading ? "Iniciando..." : "Iniciar Sesión"}
                 variant={"secondary"}
-                key={"login-button"}
                 type="submit"
                 width={"w-full"}
               />

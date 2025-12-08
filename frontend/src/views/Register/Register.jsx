@@ -1,9 +1,62 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/FormInput";
+import { AuthService } from "../../services/auth";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    // Limpiar error cuando el usuario empiece a escribir
+    if (error) setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    // Validaciones básicas
+    if (!formData.name.trim() || !formData.email.trim() || !formData.password.trim()) {
+      setError("Todos los campos son requeridos");
+      setLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 4) {
+      setError("La contraseña debe tener al menos 4 caracteres");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Llamar al servicio de registro
+      const response = await AuthService.register(formData);
+      
+      // Mostrar mensaje de éxito
+      console.log("Usuario registrado:", response.user);
+      
+      // Redirigir al dashboard o home
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "Error al registrar usuario");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-[#030712] text-white font-sans min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md m-10">
@@ -17,13 +70,19 @@ const Register = () => {
             </p>
           </div>
 
-          <form className="space-y-5">
+          {/* Mostrar error si existe */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <Input
                 type={"text"}
-                onChange={() => {}}
-                value={""}
-                key={"fullName"}
+                onChange={(value) => handleChange("name", value)}
+                value={formData.name}
                 placeholder={"Escribe tu nombre completo"}
                 label={"Nombre Completo"}
               />
@@ -32,9 +91,8 @@ const Register = () => {
             <div>
               <Input
                 type={"email"}
-                onChange={() => {}}
-                value={""}
-                key={"email"}
+                onChange={(value) => handleChange("email", value)}
+                value={formData.email}
                 placeholder={"Escribe tu email"}
                 label={"Correo Electrónico"}
               />
@@ -43,9 +101,8 @@ const Register = () => {
             <div>
               <Input
                 type={"password"}
-                onChange={() => {}}
-                value={""}
-                key={"password"}
+                onChange={(value) => handleChange("password", value)}
+                value={formData.password}
                 placeholder={"Escribe tu contraseña"}
                 label={"Contraseña"}
               />
@@ -54,10 +111,8 @@ const Register = () => {
 
             <div className="w-full">
               <Button
-                onClick={() => {}}
-                text={"Registrarse"}
+                text={loading ? "Registrando..." : "Registrarse"}
                 variant={"secondary"}
-                key={"register-button"}
                 type="submit"
                 width={"w-full"}
               />
