@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import FormSelect from "../Select/FormSelect";
 import FormInput from "../Input/FormInput";
 import { Form } from "react-router-dom";
 
-const FormAddFont = ({ onAddFont }) => {
+const FormFont = ({ onAddFont, onUpdateFont, fontToEdit, onCancelEdit }) => {
   const CATEGORIES = ["Moderna", "Elegante", "Clasica", "Creativa"];
 
   const STYLES = ["normal", "italic", "oblique"];
@@ -29,23 +29,39 @@ const FormAddFont = ({ onAddFont }) => {
     };
 
     try {
-      await onAddFont(fontData);
+      if (fontToEdit) {
+        await onUpdateFont(fontToEdit.id, fontData);
+        if (onCancelEdit) onCancelEdit();
+      }else {
+        await onAddFont(fontData);
+      }
 
       setName("");
       setSize("");
       setStyle("");
       setWeight("");
       setCategory("");
+      
     } catch (error) {
       throw error;
     }
   };
 
+  useEffect(() => {
+    if (fontToEdit) {
+      setName(fontToEdit.name || "");
+      setSize(fontToEdit.size ? fontToEdit.size.replace("px", "") : "");
+      setStyle(fontToEdit.style || "");
+      setWeight(fontToEdit.weight || "");
+      setCategory(fontToEdit.category || "");
+    }
+  }, [fontToEdit]);
+
   return (
     <div className="lg:col-span-1">
       <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 h-fit">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <span className="text-primary">+</span> Agregar Tipografía
+          {fontToEdit ? "Editar Tipografía" : "Agregar Tipografía"}
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -94,8 +110,24 @@ const FormAddFont = ({ onAddFont }) => {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg transition-colors"
             >
-              Agregar Tipografía
+              {fontToEdit ? "Editar Tipografía" : "Agregar Tipografía"}
             </button>
+            {fontToEdit && (
+              <button
+                type="button"
+                onClick={() => {
+                  setName("");
+                  setSize("");
+                  setStyle("");
+                  setWeight("");
+                  setCategory("");
+                  if (onCancelEdit) onCancelEdit();
+                }}
+                className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 rounded-lg transition-colors"
+              >
+                Cancelar
+              </button>
+            )}
           </div>
         </form>
       </div>
@@ -103,4 +135,4 @@ const FormAddFont = ({ onAddFont }) => {
   );
 };
 
-export default FormAddFont;
+export default FormFont;

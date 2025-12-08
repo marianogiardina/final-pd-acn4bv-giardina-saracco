@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import FormAddFont from "../../components/FormAddFont/FormAddFont";
-import Table from "../../components/table/table";
+import FormFont from "../../components/FormAddFont/FormFont";
+import Table from "../../components/table/Table";
 import { useState } from "react";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useFonts } from "../../hooks/useFonts";
 
 const Dashboard = () => {
   const { fonts, handleAddFont, handleDeleteFont, handleUpdateFont } = useFonts();
+
+  const [fontToEdit, setFontToEdit] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -20,7 +22,12 @@ const Dashboard = () => {
     <div className="bg-gray-950 text-gray-100 p-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          <FormAddFont onAddFont={handleAddFont} />
+          <FormFont 
+            onAddFont={handleAddFont} 
+            onUpdateFont={handleUpdateFont} 
+            fontToEdit={fontToEdit}
+            onCancelEdit={() => setFontToEdit(null)}
+          />
 
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center justify-between">
@@ -31,7 +38,7 @@ const Dashboard = () => {
               <Table
                 fonts={currentFonts}
                 onDelete={handleDeleteFont}
-                onUpdate={handleUpdateFont}
+                onUpdate={setFontToEdit}
               />
             </div>
 

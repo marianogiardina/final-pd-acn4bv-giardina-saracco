@@ -2,7 +2,7 @@ import Button from "../Button/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-const Table = ({ fonts, onEdit, onDelete }) => {
+const Table = ({ fonts, onUpdate, onDelete }) => {
 
   return (
     <>
@@ -38,7 +38,7 @@ const Table = ({ fonts, onEdit, onDelete }) => {
                 icon={<EditIcon color="warning" />}
                 variant={"edit"}
                 type={"button"}
-                onClick={() => handleEdit(font.id)}
+                onClick={() => onUpdate(font)}
               />
               <Button
                 icon={<DeleteIcon color="error" />}

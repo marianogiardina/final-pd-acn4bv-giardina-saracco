@@ -95,30 +95,18 @@ router.put("/:id", validateFontData, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
 
-    const data = await fs.promises.readFile(tipografiasPath, "utf-8");
-    const tipografias = JSON.parse(data);
+    const updatedFont = await prisma.font.update({
+      where: { id },
+      data: {
+        name: req.body.name,
+        size: req.body.size,
+        style: req.body.style,
+        weight: req.body.weight,
+        category: req.body.category,
+      },
+    });
 
-    const index = tipografias.findIndex((t) => t.id === id);
-
-    if (index === -1) {
-      return res.status(404).json({ message: "Tipografía no encontrada" });
-    }
-
-    tipografias[index] = {
-      ...tipografias[index],
-      name: req.body.name || tipografias[index].name,
-      size: req.body.size || tipografias[index].size,
-      style: req.body.style || tipografias[index].style,
-      weight: req.body.weight || tipografias[index].weight,
-      category: req.body.category || tipografias[index].category,
-    };
-
-    await fs.promises.writeFile(
-      tipografiasPath,
-      JSON.stringify(tipografias, null, 2)
-    );
-
-    res.json(tipografias[index]);
+    res.json(updatedFont);
   } catch (error) {
     res
       .status(500)
