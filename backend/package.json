@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/saracco-juan/parcial-2-pd-acn4bv-giardina-saracco#readme",
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
