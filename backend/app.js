@@ -1,20 +1,29 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import fontsRouter from './routes/fonts.js';
+import authRouter from './routes/auth.js';
 
-const fontsRouter = require('./routes/fonts');
-
+dotenv.config();
 
 const app = express();
 const port = 3000;
-
-
 
 // Middleware para parsear JSON
 app.use(express.json());
 
 app.use(cors());
 
-app.use('/api/fonts', fontsRouter);
+// Rutas
+app.use("/api/fonts", fontsRouter);
+app.use("/api/auth", authRouter);
+
+// Health check
+app.get("/health", async (req, res) => {
+  const snapshot = await db.collection("tipografias").get();
+  console.log(snapshot.docs[0].data());
+  res.send("El servidor está funcionando correctamente");
+});
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
