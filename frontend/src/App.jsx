@@ -6,6 +6,7 @@ import Layout from "./views/Layout/Layout";
 import Register from "./views/Register/Register";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute/PublicRoute";
+import Category from "./views/Category/Category";
 
 function App() {
   return (
@@ -52,8 +53,16 @@ function App() {
             </PublicRoute>
           }
         />
-        
+
         <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route
+          path="/category"
+          element={
+            <ProtectedRoute>
+              <Category />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

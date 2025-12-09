@@ -13,6 +13,17 @@ export const useFonts = () => {
     }
   };
 
+  const fetchFontsByCategory = async (category) => {
+    try {
+      
+      const data = await FontsService.getFontsByCategory(category);
+      setFonts(data);
+
+    } catch (error) {
+      console.error("Error fetching fonts by category:", error);
+    }
+  };
+
   useEffect(() => {
     fetchFonts();
   }, []);
@@ -51,6 +62,7 @@ export const useFonts = () => {
     fonts,
     handleAddFont,
     handleDeleteFont,
-    handleUpdateFont
+    handleUpdateFont,
+    fetchFontsByCategory
   };
 };
