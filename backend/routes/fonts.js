@@ -139,4 +139,24 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+    
+    const tipografias = await prisma.font.findMany({
+      where: { category },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.json(tipografias);
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Error al obtener las tipografías por categoría",
+        error: error.message,
+      });
+  }
+});
+
 export default router;

@@ -18,6 +18,23 @@ const getAllFonts = async () => {
   }
 };
 
+const getFontsByCategory = async (category) => {
+  try {
+    
+    const response = await fetch(`${API_BASE_URL}/fonts/category/${encodeURIComponent(category)}`);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener las tipografías por categoría:", error);
+    throw error;
+  }
+};
+
 const createFont = async (fontData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/fonts`, {
@@ -83,4 +100,5 @@ export const FontsService = {
   createFont,
   updateFont,
   deleteFont,
+  getFontsByCategory,
 };
