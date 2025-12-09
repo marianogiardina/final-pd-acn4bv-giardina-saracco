@@ -7,11 +7,14 @@ const Header = () => {
   const navigate = useNavigate();
   const onDashboard = location.pathname.startsWith("/dashboard");
   const target = onDashboard
-    ? { to: "/", label: "Home" }
+    ? { to: "/home", label: "Home" }
     : { to: "/dashboard", label: "Admin" };
 
   const isAuthenticated = AuthService.isAuthenticated();
   const currentUser = AuthService.getCurrentUser();
+  
+  // Ocultar botones de navegación en login y register
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/";
 
   const handleLogout = () => {
     AuthService.logout();
@@ -30,30 +33,32 @@ const Header = () => {
                 : "¡Vamos a encontrar tu tipografía ideal!"}
             </p>
           </div>
-          <nav className="flex items-center gap-4">
-            <Link
-              to={target.to}
-              className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
-            >
-              {target.label}
-            </Link>
-
-            {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-red-700 transition-colors"
-              >
-                Cerrar Sesión
-              </button>
-            ) : (
+          {!isAuthPage && (
+            <nav className="flex items-center gap-4">
               <Link
-                to="/login"
-                className="bg-white text-black border-2 border-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors"
+                to={target.to}
+                className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
               >
-                Login
+                {target.label}
               </Link>
-            )}
-          </nav>
+
+              {isAuthenticated ? (
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-red-700 transition-colors"
+                >
+                  Cerrar Sesión
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="bg-white text-black border-2 border-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors"
+                >
+                  Login
+                </Link>
+              )}
+            </nav>
+          )}
         </div>
       </div>
     </header>
