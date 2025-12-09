@@ -11,8 +11,10 @@ const Category = () => {
     const { fetchFontsByCategory, fonts } = useFonts();
 
     useEffect(() => {
-        fetchFontsByCategory(category);
-    }, []);
+        if (category) {
+            fetchFontsByCategory(category);
+        }
+    }, [category, fetchFontsByCategory]);
 
     return (
         <div className="bg-[#030712] text-white font-sans min-h-screen">
