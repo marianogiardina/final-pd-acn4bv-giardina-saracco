@@ -64,6 +64,7 @@ const TestFont = () => {
                     fontFamily={font.name}
                     showFavoriteButton={false}
                     showClearButton={false}
+                    showControls={true}
                     placeholder="Escribe aquí para probar la fuente..."
                     defaultText="El rápido zorro marrón salta sobre el perro perezoso"
                 />

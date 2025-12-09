@@ -10,9 +10,12 @@ const FontTester = ({
   defaultText = "AåBbCc\n#9½\nƒ%£©∑∅!",
   maxLength,
   description,
+  showControls = false,
 }) => {
   const [inputText, setInputText] = useState("");
   const [displayText, setDisplayText] = useState(defaultText);
+  const [fontSize, setFontSize] = useState(36);
+  const [fontWeight, setFontWeight] = useState(400);
 
   const handleClear = () => {
     setInputText("");
@@ -42,10 +45,48 @@ const FontTester = ({
           style={{
             fontFamily: fontFamily,
             whiteSpace: "pre-line",
+            fontSize: showControls ? `${fontSize}px` : undefined,
+            fontWeight: showControls ? fontWeight : undefined,
           }}
         >
           {displayText}
         </div>
+        
+        {showControls && (
+          <div className="flex items-center justify-center gap-6 mb-6 pt-6 border-t border-gray-600">
+            <div className="flex items-center gap-3">
+              <label className="text-sm text-gray-400">Tamaño:</label>
+              <input
+                type="range"
+                min="16"
+                max="96"
+                value={fontSize}
+                onChange={(e) => setFontSize(e.target.value)}
+                className="w-32 accent-yellow-500"
+              />
+              <span className="text-sm text-gray-400 w-12">{fontSize}px</span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <label className="text-sm text-gray-400">Peso:</label>
+              <select
+                value={fontWeight}
+                onChange={(e) => setFontWeight(e.target.value)}
+                className="bg-gray-800 border border-gray-600 text-white px-4 py-2 rounded focus:border-yellow-500 focus:outline-none"
+                style={{ fontFamily: fontFamily }}
+              >
+                <option value="300">Light (300)</option>
+                <option value="400">Regular (400)</option>
+                <option value="500">Medium (500)</option>
+                <option value="600">SemiBold (600)</option>
+                <option value="700">Bold (700)</option>
+                <option value="800">ExtraBold (800)</option>
+                <option value="900">Black (900)</option>
+              </select>
+            </div>
+          </div>
+        )}
+        
         <div className="flex justify-center gap-3 mb-8">
           {showFavoriteButton && (
             <button
