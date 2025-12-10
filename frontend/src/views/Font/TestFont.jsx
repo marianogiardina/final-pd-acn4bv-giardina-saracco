@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSearchParams, Navigate } from 'react-router-dom';
 import { useFonts } from '../../hooks/useFonts';
-import { FontsService } from '../../services/fonts';
+
 import FontTester from '../../components/FontTester/FontTester';
 
 const TestFont = () => {
