@@ -1,29 +1,53 @@
 
-import React, { use, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSearchParams, Navigate } from 'react-router-dom';
 import { useFonts } from '../../hooks/useFonts';
+import { FontsService } from '../../services/fonts';
 import FontTester from '../../components/FontTester/FontTester';
 
 const TestFont = () => {
 
+    const TEXT_SAMPLE = "Glypha, encontra tu tipografia ideal aquí.";
+
     const [searchParams] = useSearchParams();
     const fontId = searchParams.get('fontId');
+    const [isFavorite, setIsFavorite] = useState(false);
 
     if (!fontId) {
         return <Navigate to="/" replace />;
     }
 
-    const { fonts, fetchFontById } = useFonts();
+    const { fonts, fetchFontById, handleAddFontToFavorites, handleDeleteFontFromFavorites, handleCheckIfFontIsFavorite } = useFonts();
 
     const font = fonts[0];
 
     useEffect(() => {
+        const loadFontData = async () => {
+            if (fontId) {
+                await fetchFontById(fontId);
+                
 
-        if (fontId) {
-            fetchFontById(fontId);
+                const isInFavorites = await handleCheckIfFontIsFavorite(fontId);
+                setIsFavorite(isInFavorites);
+            }
+        };
+
+        loadFontData();
+    }, [fontId]);
+
+    const handleBtnFavorite = async () => {
+        try {
+            if (isFavorite) {
+                await handleDeleteFontFromFavorites(font.id);
+                setIsFavorite(false);
+            } else {
+                await handleAddFontToFavorites(font.id);
+                setIsFavorite(true);
+            }
+        } catch (error) {
+            console.error("Error al cambiar favorito:", error);
         }
-
-    }, [font, fetchFontById]);
+    };
 
 
     if (!fonts || fonts.length === 0) {
@@ -48,11 +72,22 @@ const TestFont = () => {
                             <p className="text-xl text-gray-400">{font.category || 'Sans Serif'}</p>
                         </div>
                         
-                        <button id="favoriteBtn" className="flex items-center gap-2 px-6 py-3 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold transition-all rounded">
-                            <svg id="heartIcon" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button
+                         onClick={handleBtnFavorite}
+                         className={`flex items-center gap-2 px-6 py-3 border-2 font-bold transition-all rounded ${
+                            isFavorite 
+                                ? 'border-yellow-500 bg-yellow-500 text-black hover:bg-yellow-600' 
+                                : 'border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black'
+                         }`}>
+                            <svg 
+                                className="w-6 h-6" 
+                                fill={isFavorite ? "currentColor" : "none"} 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
-                            <span id="favoriteText">Agregar a Favoritos</span>
+                            <span>{isFavorite ? 'Quitar de Favoritos' : 'Agregar a Favoritos'}</span>
                         </button>
                     </div>
 
@@ -66,7 +101,7 @@ const TestFont = () => {
                     showClearButton={false}
                     showControls={true}
                     placeholder="Escribe aquí para probar la fuente..."
-                    defaultText="El rápido zorro marrón salta sobre el perro perezoso"
+                    defaultText={TEXT_SAMPLE}
                 />
 
                 
@@ -80,7 +115,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">Light (300)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 300}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -90,7 +125,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">Regular (400)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 400}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -100,7 +135,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">Medium (500)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 500}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -110,7 +145,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">SemiBold (600)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 600}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -120,7 +155,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">Bold (700)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 700}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -130,7 +165,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">ExtraBold (800)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 800}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
 
@@ -139,7 +174,7 @@ const TestFont = () => {
                                 <span className="text-sm text-gray-400">Black (900)</span>
                             </div>
                             <p className="text-3xl" style={{fontFamily: font.name, fontWeight: 900}}>
-                                El rápido zorro marrón salta sobre el perro perezoso
+                                {TEXT_SAMPLE}
                             </p>
                         </div>
                     </div>

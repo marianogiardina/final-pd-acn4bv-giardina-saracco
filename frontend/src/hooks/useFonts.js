@@ -70,6 +70,41 @@ export const useFonts = () => {
     }
   };
 
+  const handleAddFontToFavorites = async (id) => {
+    try {
+
+      await FontsService.addFontToFavorites(id);
+
+      alert("Tipografía agregada a favoritos exitosamente");
+
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleDeleteFontFromFavorites = async (id) => {
+    try {
+      await FontsService.deleteFontFromFavorites(id);
+
+      alert("Tipografía eliminada de favoritos exitosamente");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleCheckIfFontIsFavorite = async (id) => {
+    try {
+      const isFavorite = await FontsService.checkIfFontIsFavorite(id);
+
+      return isFavorite;
+
+    } catch (error) {
+
+      alert(error.message);
+
+      return false;
+    }
+  };
   return {
     fonts,
     handleAddFont,
@@ -77,5 +112,8 @@ export const useFonts = () => {
     handleUpdateFont,
     fetchFontsByCategory,
     fetchFontById,
+    handleAddFontToFavorites,
+    handleDeleteFontFromFavorites,
+    handleCheckIfFontIsFavorite,
   };
 };
