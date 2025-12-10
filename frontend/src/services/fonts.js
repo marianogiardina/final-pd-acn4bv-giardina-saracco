@@ -1,6 +1,8 @@
 // URL base del backend (JSON)
 const API_BASE_URL = "http://localhost:3000/api";
 
+const TOKEN = localStorage.getItem("token");
+
 const getAllFonts = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/fonts`);
@@ -118,16 +120,15 @@ const deleteFont = async (id) => {
 
 const addFontToFavorites = async (fontId) => {
   try {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
+    
+    if (!TOKEN) {
       throw new Error("No hay token de autenticación");
     }
 
     const response = await fetch(`${API_BASE_URL}/fonts/${fontId}/favorite`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     });
 
@@ -144,6 +145,35 @@ const addFontToFavorites = async (fontId) => {
   }
 };
 
+const deleteFontFromFavorites = async (fontId) => {
+  try {
+
+    if (!TOKEN) {
+      throw new Error("No hay token de autenticación");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/fonts/${fontId}/favorite`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export const FontsService = {
   getAllFonts,
   createFont,
@@ -152,4 +182,5 @@ export const FontsService = {
   getFontsByCategory,
   getFontById,
   addFontToFavorites,
+  deleteFontFromFavorites,
 };

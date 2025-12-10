@@ -17,7 +17,7 @@ const TestFont = () => {
         return <Navigate to="/" replace />;
     }
 
-    const { fonts, fetchFontById, handleAddFontToFavorites } = useFonts();
+    const { fonts, fetchFontById, handleAddFontToFavorites, handleDeleteFontFromFavorites } = useFonts();
 
     const font = fonts[0];
 
@@ -32,7 +32,8 @@ const TestFont = () => {
     const handleBtnFavorite = async () => {
         try {
             if (isFavorite) {
-                
+                await handleDeleteFontFromFavorites(font.id);
+                setIsFavorite(false);
             } else {
                 await handleAddFontToFavorites(font.id);
                 setIsFavorite(true);

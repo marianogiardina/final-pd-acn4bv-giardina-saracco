@@ -81,6 +81,17 @@ export const useFonts = () => {
       alert(error.message);
     }
   };
+
+  const handleDeleteFontFromFavorites = async (id) => {
+    try {
+      await FontsService.deleteFontFromFavorites(id);
+
+      alert("Tipografía eliminada de favoritos exitosamente");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return {
     fonts,
     handleAddFont,
@@ -89,5 +100,6 @@ export const useFonts = () => {
     fetchFontsByCategory,
     fetchFontById,
     handleAddFontToFavorites,
+    handleDeleteFontFromFavorites,
   };
 };
