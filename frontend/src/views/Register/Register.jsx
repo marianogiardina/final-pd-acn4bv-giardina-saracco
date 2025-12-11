@@ -47,10 +47,8 @@ const Register = () => {
       // Llamar al servicio de registro
       const response = await AuthService.register(formData);
       
-      // Mostrar mensaje de éxito
       showToast("¡Usuario registrado exitosamente!", "success");
       
-      // Redirigir a home
       navigate("/home");
     } catch (err) {
       setError(err.message || "Error al registrar usuario");
@@ -72,7 +70,6 @@ const Register = () => {
             </p>
           </div>
 
-          {/* Mostrar error si existe */}
           {error && (
             <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
               {error}

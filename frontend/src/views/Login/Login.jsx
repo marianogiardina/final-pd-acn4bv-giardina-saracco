@@ -37,13 +37,13 @@ const Login = () => {
     }
 
     try {
-      // Llamar al servicio de login
+      
       const response = await AuthService.login(formData);
       
-      // Mostrar mensaje de éxito
+      
       showToast(`¡Bienvenido, ${response.user.name}!`, "success");
       
-      // Redirigir a home
+      
       navigate("/home");
     } catch (err) {
       setError(err.message || "Error al iniciar sesión");
@@ -65,7 +65,6 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Mostrar error si existe */}
           {error && (
             <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
               {error}

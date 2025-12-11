@@ -1,6 +1,4 @@
 import express from "express";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 import { prisma } from "../lib/prisma.js";
 import authMiddleware from "../middleware/auth.js";
 import adminMiddleware from "../middleware/admin.js";

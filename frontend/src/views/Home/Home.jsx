@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { FontsService } from "../../services/fonts";
 import TrendingFonts from "../../components/TrendingFonts/TrendingFonts";
 import { useFonts } from "../../hooks/useFonts";
 import CategoryCard from "../../components/Cards/CategoryCard";
