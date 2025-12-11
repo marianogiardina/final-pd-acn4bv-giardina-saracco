@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FontsService } from '../services/fonts';
 import { useToast } from '../context/ToastContext';
 
@@ -6,16 +6,16 @@ export const useFonts = () => {
   const [fonts, setFonts] = useState([]);
   const { showToast } = useToast();
 
-  const fetchFonts = async () => {
+  const fetchFonts = useCallback(async () => {
     try {
       const data = await FontsService.getAllFonts();
       setFonts(data);
     } catch (error) {
       console.error("Error al buscar las fuentes:", error);
     }
-  };
+  }, []);
 
-  const fetchFontsByCategory = async (category) => {
+  const fetchFontsByCategory = useCallback(async (category) => {
     try {
       
       const data = await FontsService.getFontsByCategory(category);
@@ -24,9 +24,9 @@ export const useFonts = () => {
     } catch (error) {
       console.error("Error al buscar las fuentes por categoría:", error);
     }
-  };
+  }, []);
 
-  const fetchFontById = async (id) => {
+  const fetchFontById = useCallback(async (id) => {
     try {
 
       const data = await FontsService.getFontById(id);
@@ -36,11 +36,11 @@ export const useFonts = () => {
     } catch (error) {
       console.error("Error al buscar la fuente por ID:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchFonts();
-  }, []);
+  }, [fetchFonts]);
 
   const handleAddFont = async (newFont) => {
     try {

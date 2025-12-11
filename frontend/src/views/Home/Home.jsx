@@ -66,7 +66,7 @@ const Home = () => {
           </div>
 
           <TrendingFonts
-            fonts={fonts}
+            fonts={fonts.slice(0, 4)}
             onSelect={(name) => setFontFamily(name)}
           />
         </section>
