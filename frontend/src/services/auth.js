@@ -106,6 +106,11 @@ const getToken = () => {
   return localStorage.getItem("token");
 };
 
+const isAdmin = () => {
+  const user = getCurrentUser();
+  return user && user.role === 2;
+};
+
 export const AuthService = {
   register,
   login,
@@ -114,4 +119,5 @@ export const AuthService = {
   isAuthenticated,
   getCurrentUser,
   getToken,
+  isAdmin,
 };

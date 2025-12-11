@@ -6,14 +6,12 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const onDashboard = location.pathname.startsWith("/dashboard");
-  const target = onDashboard
-    ? { to: "/home", label: "Home" }
-    : { to: "/dashboard", label: "Admin" };
+  const onHome = location.pathname.startsWith("/home");
 
   const isAuthenticated = AuthService.isAuthenticated();
   const currentUser = AuthService.getCurrentUser();
+  const isAdmin = AuthService.isAdmin();
   
-  // Ocultar botones de navegación en login y register
   const isAuthPage = location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/";
 
   const handleLogout = () => {
@@ -35,12 +33,23 @@ const Header = () => {
           </div>
           {!isAuthPage && (
             <nav className="flex items-center gap-4">
-              <Link
-                to={target.to}
-                className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
-              >
-                {target.label}
-              </Link>
+              {isAuthenticated && !onHome && (
+                <Link
+                  to="/home"
+                  className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+                >
+                  Home
+                </Link>
+              )}
+
+              {isAuthenticated && isAdmin && !onDashboard && (
+                <Link
+                  to="/dashboard"
+                  className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+                >
+                  Admin
+                </Link>
+              )}
 
               {isAuthenticated ? (
                 <button

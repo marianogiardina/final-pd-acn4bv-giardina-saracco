@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { prisma } from "../lib/prisma.js";
 import authMiddleware from "../middleware/auth.js";
+import adminMiddleware from "../middleware/admin.js";
 
 const router = express.Router();
 
@@ -116,7 +117,7 @@ router.post("/", validateFontData, async (req, res) => {
   }
 });
 
-router.put("/:id", validateFontData, async (req, res) => {
+router.put("/:id", authMiddleware, adminMiddleware, validateFontData, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
 
@@ -142,7 +143,7 @@ router.put("/:id", validateFontData, async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
 
