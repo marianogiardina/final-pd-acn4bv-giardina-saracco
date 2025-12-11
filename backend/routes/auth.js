@@ -163,7 +163,7 @@ router.get('/me', async (req, res) => {
         role: true,
         createdAt: true
       }
-    });
+    }); 
 
     if (!user) {
       return res.status(404).json({
