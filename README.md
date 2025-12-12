@@ -39,6 +39,7 @@ npm install
 ```bash
 cd backend
 npx prisma migrate dev
+npx prisma generate
 ```
 
 Este comando:
@@ -119,7 +120,6 @@ Para acceder como administrador, usa las credenciales:
 ### Backend
 ```bash
 npm start                    
-npx prisma migrate dev      
 ```
 
 ### Frontend
