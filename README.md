@@ -2,6 +2,28 @@
 
 Sistema de gestión de tipografías con autenticación de usuarios y panel de administración.
 
+## Requisitos Previos (IMPORTANTE)
+
+Este proyecto **requiere Node.js versión 22.12.0 o superior** para funcionar correctamente.
+
+### Verificar versión de Node
+```bash
+node --version
+```
+
+**Versión requerida:** `v22.12.0` o superior  
+**Versión de npm requerida:** `10.x.x` o superior
+
+### Si tienes otra versión de Node:
+
+**Actualizar Usando nvm (recomendado):**
+Ingresar a: https://github.com/coreybutler/nvm-windows/releases/tag/1.2.2
+Descargar el archivo nvm-setup.exe
+```bash
+nvm install 22.12.0
+nvm use 22.12.0
+```
+
 ##  Configuración del Proyecto
 
 
