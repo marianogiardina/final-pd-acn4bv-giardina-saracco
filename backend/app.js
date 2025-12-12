@@ -19,9 +19,7 @@ app.use("/api/fonts", fontsRouter);
 app.use("/api/auth", authRouter);
 
 // Health check
-app.get("/health", async (req, res) => {
-  const snapshot = await db.collection("tipografias").get();
-  console.log(snapshot.docs[0].data());
+app.get("/health", (req, res) => {
   res.send("El servidor está funcionando correctamente");
 });
 
